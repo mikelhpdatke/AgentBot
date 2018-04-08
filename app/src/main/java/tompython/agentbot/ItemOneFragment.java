@@ -47,8 +47,12 @@ public class ItemOneFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_item_one, container, false);
         final ArcProgress arcProgress = (ArcProgress) view.findViewById(R.id.arc_progress);
-        arcProgress.setMax(100);
+
+       // arcProgress.setMax(100);
         arcProgress.setProgress(ItemTwoFragment.list.size());
+        arcProgress.setBottomTextSize(40);
+       // arcProgress.setTextColor(R.color.colorArcBG);
+        //arcProgress.setFinishedStrokeColor(R.color.colorWhite);
 
         return  view;
     }
