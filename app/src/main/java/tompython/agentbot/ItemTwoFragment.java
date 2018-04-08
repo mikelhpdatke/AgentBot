@@ -178,7 +178,6 @@ public class ItemTwoFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         recyclerView.setLayoutManager(linearLayoutManager);
-        list.add("None");
         adapter.setList(list);
         recyclerView.setAdapter(adapter);
         return view;
