@@ -23,7 +23,7 @@ public class TcpdumpPacketCapture {
         ip_server = _ip_server;
         Log.e("Debug_Tom","Initialising Capture");
         Log.e("Debug_Tom","Please wait while packet capture is initialised...");
-
+        ItemTwoFragment.is_run = true;
         if (rootTcpdumpShell != null) {
             if(!isInitialised)
                 throw new RuntimeException("rootTcpdump shell: not null, initialized:false");
@@ -53,6 +53,7 @@ public class TcpdumpPacketCapture {
 
     private static void startTcpdumpCapture() {
 
+        Log.e("Debug_Tom", "is_run =trueeee");
         try{
             // Check busybox.bin
             List<String> out = Shell.SH.run("ps | grep busybox.bin");
@@ -99,6 +100,7 @@ public class TcpdumpPacketCapture {
     }
 
     public static void stopTcpdumpCapture(Activity _activity){
+        ItemTwoFragment.is_run = false;
         if(isInitialised == false) {
             //Uncommenting creates problem with sometimes main_tv output wrong. Not really required right now.
             //initialiseCapture(_activity);

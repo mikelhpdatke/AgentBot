@@ -72,7 +72,7 @@ public class ItemThreeFragment extends Fragment {
                 Log.e("Debug View on Fragment", "What Heppenennnn");
 //                Log.e("Debug View on Fragment", v.getTransitionName());
                 ip_server = editText.getText().toString();
-                Toasty.success(context, "Success! Your IP Server is " + ip_server, Toast.LENGTH_LONG, true).show();
+                Toasty.success(context, "Success! Your IP Server is " + ip_server, Toast.LENGTH_SHORT, true).show();
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_layout, ItemOneFragment.newInstance());

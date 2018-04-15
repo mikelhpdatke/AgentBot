@@ -49,10 +49,11 @@ public class FetchData extends AsyncTask<String, String, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        //LogActivity.addString(Calendar.getInstance().getTime().toString() + ":" +"Running FetchData classs..");
+        Log.e("Debug_Tom", Calendar.getInstance().getTime().toString() + ":" +"Running FetchData classs..");
     }
 
     protected String doInBackground(String... strings) {
+        Log.e("Debug_Tom", String.valueOf(ItemTwoFragment.is_run));
         while (ItemTwoFragment.is_run == true) {
             Log.e("FetchData", String.valueOf(isCancelled()));
             if (isCancelled()){
@@ -157,6 +158,6 @@ public class FetchData extends AsyncTask<String, String, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         //Toast.makeText(contextParent, "Okie, Finished", Toast.LENGTH_SHORT).show();
-        Toasty.success(contextParent, "Fetching data has been completed!" , Toast.LENGTH_LONG, true).show();
+        Toasty.success(contextParent, "Fetching data has been completed!" , Toast.LENGTH_SHORT, true).show();
     }
 }

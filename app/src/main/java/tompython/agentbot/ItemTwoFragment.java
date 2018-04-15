@@ -197,21 +197,11 @@ public class ItemTwoFragment extends Fragment {
         //hideKeyboardFrom(this,editText);
         //LogActivity.addString("StarttttttWTF");
 
-        Log.e("EditText", Calendar.getInstance().getTime().toString() + ":" + ItemThreeFragment.ip_server);
-        String cmd_url = new StringBuffer().append("http://").append(ItemThreeFragment.ip_server).append(":9200").append("/android/_search").toString();
 
-        Log.e("IP Server::", cmd_url);
-        task = new FetchData(getActivity(), adapter, recyclerView, cmd_url);
-        task.execute(cmd_url);
         //
-
-
         Button bt = (Button)view.findViewById(R.id.button_start);
         bt.setEnabled(false);
         if((int)bt.getTag() == 1){
-            is_run = false;
-            task.cancel(true);
-
             //Using progress dialogue from main. See comment in: TcpdumpPacketCapture.stopTcpdumpCapture
             Log.e("Debug_Tom","Killing Tcpdump && Busybox process.");
             //LogActivity.addString(Calendar.getInstance().getTime().toString() + ":" +"Killing Tcpdump && Busybox process.");
@@ -221,16 +211,23 @@ public class ItemTwoFragment extends Fragment {
             ((TextView)view.findViewById(R.id.tv_status)).setText("Packet capture stopped");
         }
         else if ((int)bt.getTag() == 0){
-            is_run = true;
             TcpdumpPacketCapture.initialiseCapture(getActivity(), ItemThreeFragment.ip_server);
             bt.setText("Stop  Capture");
-
             bt.setTag(1);
         }
         bt.setEnabled(true);
+
+        Log.e("EditText", Calendar.getInstance().getTime().toString() + ":" + ItemThreeFragment.ip_server);
+        String cmd_url = new StringBuffer().append("http://").append(ItemThreeFragment.ip_server).append(":9200").append("/android/_search").toString();
+        Log.e("IP Server::", cmd_url);
+        task = new FetchData(getActivity(), adapter, recyclerView, cmd_url);
+        task.execute(cmd_url);
+
+
     }
 
     public void stopAndExitActivity(View v) {
+
         TcpdumpPacketCapture.stopTcpdumpCapture(getActivity());
         getActivity().finish();
     }
