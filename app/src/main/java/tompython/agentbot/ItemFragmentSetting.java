@@ -33,12 +33,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+import org.bson.Document;
+
 import es.dmoral.toasty.Toasty;
 
 public class ItemFragmentSetting extends Fragment {
     static String ip_server = null;
     Context context;
     Activity activity;
+    static MongoClient mongo = new MongoClient(ItemFragmentSetting.ip_server, 27017);
+    static MongoDatabase database = mongo.getDatabase("BlackIP");
+    static MongoCollection<Document> collection = database.getCollection("Collection_1");
     public static ItemFragmentSetting newInstance() {
         ItemFragmentSetting fragment = new ItemFragmentSetting();
         return fragment;
@@ -71,6 +80,9 @@ public class ItemFragmentSetting extends Fragment {
                 Log.e("Debug View on Fragment", "What Heppenennnn");
 //                Log.e("Debug View on Fragment", v.getTransitionName());
                 ip_server = editText.getText().toString();
+                mongo = new MongoClient(ItemFragmentSetting.ip_server, 27017);
+                database = mongo.getDatabase("BlackIP");
+                collection = database.getCollection("FoundIP");
                 Toasty.success(context, "Success! Your IP Server is " + ip_server, Toast.LENGTH_SHORT, true).show();
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

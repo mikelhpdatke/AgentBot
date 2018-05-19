@@ -30,4 +30,5 @@ dependencies {
     compile 'eu.chainfire:libsuperuser:1.0.0.+'
     compile 'com.github.lzyzsd:circleprogress:+'
     implementation 'com.github.GrenderG:Toasty:1.2.8'
+    compile 'org.mongodb:mongo-java-driver:3.7.0'
 }

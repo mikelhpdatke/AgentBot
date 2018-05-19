@@ -10,6 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.mongodb.Block;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +43,7 @@ public class FetchData extends AsyncTask<String, String, String> {
     Adapter adapter;
     RecyclerView recyclerView;
     String ip_server;
+
     public FetchData(Activity contextParent, Adapter adapter, RecyclerView recyclerView, String ip_server) {
         this.contextParent = contextParent;
         this.adapter = adapter;
@@ -62,28 +69,11 @@ public class FetchData extends AsyncTask<String, String, String> {
             Log.e("Background::","Fetching data from server..");
             //LogActivity.addString(Calendar.getInstance().getTime().toString() + ":" +"Fetching data from server..");
             try {
-                Log.e("Dang xu ly", ip_server);
-                HttpURLConnection urlConnection = null;
-                StringBuffer stringBuffer = null;
-                Log.e("Fetch", ip_server);
-                URL url = new URL(ip_server);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                Log.e("FetchWTFFFF", "2222");
-                urlConnection.setRequestMethod("GET");
-                Log.e("FetchWTFFFF", "222255555");
-                urlConnection.connect();
-                Log.e("FetchWTFFFF", "333333");
-                InputStream inputStream = urlConnection.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line = "";
-                stringBuffer = new StringBuffer();
-                Log.e("FetchWTFFFF", "DKMDKMDKDMKD");
-                while ((line = reader.readLine()) != null) {
-                    stringBuffer.append(line);
-                    Log.e("Fetch", "Still fetching dataaaaaaa");
+
+                //publishProgress(stringBuffer.toString());
+                for (Document cur : ItemFragmentSetting.collection.find()) {
+                    Log.e("DEBUG",cur.toJson());
                 }
-                Log.e("DebugFetchData", stringBuffer.toString());
-                publishProgress(stringBuffer.toString());
                 Thread.sleep(5000);
             } catch (Exception e) {
                 e.printStackTrace();
