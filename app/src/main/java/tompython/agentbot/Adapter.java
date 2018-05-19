@@ -3,7 +3,6 @@ package tompython.agentbot;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,7 +24,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.PacketViewHolder>{
     @Override
     public PacketViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.e("HAUUU", mContext.toString());
-        View view = ItemTwoFragment.mInflater.inflate(R.layout.item, parent, false);
+        View view = ItemFragmentDashboard.mInflater.inflate(R.layout.item_ip, parent, false);
         Log.e("PacketView","DKMDKMDKDMKDMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
         return new PacketViewHolder(view);
     }

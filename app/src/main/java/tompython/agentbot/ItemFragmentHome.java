@@ -22,17 +22,15 @@ package tompython.agentbot;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.github.lzyzsd.circleprogress.ArcProgress;
 
-public class ItemOneFragment extends Fragment {
-    public static ItemOneFragment newInstance() {
-        ItemOneFragment fragment = new ItemOneFragment();
+public class ItemFragmentHome extends Fragment {
+    public static ItemFragmentHome newInstance() {
+        ItemFragmentHome fragment = new ItemFragmentHome();
         return fragment;
     }
 
@@ -45,14 +43,14 @@ public class ItemOneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_item_one, container, false);
+        View view = inflater.inflate(R.layout.fragment_item_home, container, false);
         final ArcProgress arcProgress = (ArcProgress) view.findViewById(R.id.arc_progress);
 
        // arcProgress.setMax(100);
         arcProgress.setUnfinishedStrokeColor(R.color.black);
         arcProgress.setFinishedStrokeColor(R.color.blue_600);
 
-        arcProgress.setProgress(ItemTwoFragment.list.size());
+        arcProgress.setProgress(ItemFragmentDashboard.list.size());
         arcProgress.setBottomTextSize(40);
 
        // arcProgress.setTextColor(R.color.colorArcBG);

@@ -23,9 +23,7 @@ package tompython.agentbot;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,14 +40,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import eu.chainfire.libsuperuser.Shell;
 
-public class ItemTwoFragment extends Fragment {
+public class ItemFragmentDashboard extends Fragment {
     Context context;
     Activity activity;
     TextView textView;
@@ -61,8 +56,8 @@ public class ItemTwoFragment extends Fragment {
     static FetchData task;
     static boolean is_run = false;
 
-    public static ItemTwoFragment newInstance() {
-        ItemTwoFragment fragment = new ItemTwoFragment();
+    public static ItemFragmentDashboard newInstance() {
+        ItemFragmentDashboard fragment = new ItemFragmentDashboard();
         return fragment;
     }
 
@@ -78,13 +73,10 @@ public class ItemTwoFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = (View) inflater.inflate(R.layout.fragment_item_two, container, false);
+        final View view = (View) inflater.inflate(R.layout.fragment_item_dashboard, container, false);
 
         final Button bt = (Button) view.findViewById(R.id.button_start);
         final Button bt_stop = (Button) view.findViewById(R.id.button_stop);
@@ -183,9 +175,6 @@ public class ItemTwoFragment extends Fragment {
         return view;
     }
 
-
-
-
     public void  startCapture(View view) {
 
         //
@@ -202,33 +191,31 @@ public class ItemTwoFragment extends Fragment {
         Button bt = (Button)view.findViewById(R.id.button_start);
         bt.setEnabled(false);
         if((int)bt.getTag() == 1){
-            //Using progress dialogue from main. See comment in: TcpdumpPacketCapture.stopTcpdumpCapture
+            //Using progress dialogue from main. See comment in: Agent.stopTcpdumpCapture
             Log.e("Debug_Tom","Killing Tcpdump && Busybox process.");
             //LogActivity.addString(Calendar.getInstance().getTime().toString() + ":" +"Killing Tcpdump && Busybox process.");
-            TcpdumpPacketCapture.stopTcpdumpCapture(getActivity());
+            Agent.stopTcpdumpCapture(getActivity());
             bt.setText("Start Capture");
             bt.setTag(0);
             ((TextView)view.findViewById(R.id.tv_status)).setText("Packet capture stopped");
         }
         else if ((int)bt.getTag() == 0){
-            TcpdumpPacketCapture.initialiseCapture(getActivity(), ItemThreeFragment.ip_server);
+            Agent.initialiseCapture(getActivity(), ItemFragmentSetting.ip_server);
             bt.setText("Stop  Capture");
             bt.setTag(1);
         }
         bt.setEnabled(true);
 
-        Log.e("EditText", Calendar.getInstance().getTime().toString() + ":" + ItemThreeFragment.ip_server);
-        String cmd_url = new StringBuffer().append("http://").append(ItemThreeFragment.ip_server).append(":9200").append("/android/_search").toString();
+        Log.e("EditText", Calendar.getInstance().getTime().toString() + ":" + ItemFragmentSetting.ip_server);
+        String cmd_url = new StringBuffer().append("http://").append(ItemFragmentSetting.ip_server).append(":9200").append("/android/_search").toString();
         Log.e("IP Server::", cmd_url);
         task = new FetchData(getActivity(), adapter, recyclerView, cmd_url);
         task.execute(cmd_url);
-
-
     }
 
     public void stopAndExitActivity(View v) {
 
-        TcpdumpPacketCapture.stopTcpdumpCapture(getActivity());
+        Agent.stopTcpdumpCapture(getActivity());
         getActivity().finish();
     }
 
@@ -309,6 +296,4 @@ public class ItemTwoFragment extends Fragment {
         }
         return 0;
     }
-
-
 }

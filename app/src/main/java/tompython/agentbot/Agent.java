@@ -11,7 +11,7 @@ import eu.chainfire.libsuperuser.Shell;
 /**
  * @Author: Tom
  */
-public class TcpdumpPacketCapture {
+public class Agent {
 
     private static Activity activity;
     private static Shell.Interactive rootTcpdumpShell;
@@ -23,7 +23,7 @@ public class TcpdumpPacketCapture {
         ip_server = _ip_server;
         Log.e("Debug_Tom","Initialising Capture");
         Log.e("Debug_Tom","Please wait while packet capture is initialised...");
-        ItemTwoFragment.is_run = true;
+        ItemFragmentDashboard.is_run = true;
         if (rootTcpdumpShell != null) {
             if(!isInitialised)
                 throw new RuntimeException("rootTcpdump shell: not null, initialized:false");
@@ -75,7 +75,6 @@ public class TcpdumpPacketCapture {
                 return;
             }
             // Command :: tcpdump -i <interface> "tcp[tcpflags] & (tcp-syn) != 0"
-
             rootTcpdumpShell.addCommand(activity.getApplicationInfo().dataDir
                     + "/files/tcpdump.bin -i any \"tcp[tcpflags] & (tcp-syn) != 0\" -w - | "
                     + activity.getApplicationInfo().dataDir
@@ -100,7 +99,7 @@ public class TcpdumpPacketCapture {
     }
 
     public static void stopTcpdumpCapture(Activity _activity){
-        ItemTwoFragment.is_run = false;
+        ItemFragmentDashboard.is_run = false;
         if(isInitialised == false) {
             //Uncommenting creates problem with sometimes main_tv output wrong. Not really required right now.
             //initialiseCapture(_activity);

@@ -15,7 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -53,8 +52,8 @@ public class FetchData extends AsyncTask<String, String, String> {
     }
 
     protected String doInBackground(String... strings) {
-        Log.e("Debug_Tom", String.valueOf(ItemTwoFragment.is_run));
-        while (ItemTwoFragment.is_run == true) {
+        Log.e("Debug_Tom", String.valueOf(ItemFragmentDashboard.is_run));
+        while (ItemFragmentDashboard.is_run == true) {
             Log.e("FetchData", String.valueOf(isCancelled()));
             if (isCancelled()){
                 Log.e("FetchData", "Da huy backround..");
@@ -116,7 +115,7 @@ public class FetchData extends AsyncTask<String, String, String> {
         // Set list && Adapter
         Log.e("AdapterLogErr", Integer.toString(list.size()) );
 
-        ItemTwoFragment.list = list;
+        ItemFragmentDashboard.list = list;
         adapter.setList(list);
         for (String i : adapter.list) {
             Log.e("Check list::::", i);
@@ -136,7 +135,7 @@ public class FetchData extends AsyncTask<String, String, String> {
                 Notification noti = null;
 
                     noti = new Notification.Builder(contextParent)
-                            .setContentTitle("Thiết bị của bạn đang truy cập IP lạ!!")
+                            .setContentTitle("Router 1 đang bị tấn công!!")
                             .setContentText("Bấm để xem chi tiết")
                             .setSmallIcon(R.drawable.ic_action_bug)
                             .setContentIntent(pIntent)

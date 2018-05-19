@@ -22,7 +22,6 @@ package tompython.agentbot;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -36,12 +35,12 @@ import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
 
-public class ItemThreeFragment extends Fragment {
+public class ItemFragmentSetting extends Fragment {
     static String ip_server = null;
     Context context;
     Activity activity;
-    public static ItemThreeFragment newInstance() {
-        ItemThreeFragment fragment = new ItemThreeFragment();
+    public static ItemFragmentSetting newInstance() {
+        ItemFragmentSetting fragment = new ItemFragmentSetting();
         return fragment;
     }
 
@@ -61,7 +60,7 @@ public class ItemThreeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = (View) inflater.inflate(R.layout.fragment_item_three, container, false);
+        View view = (View) inflater.inflate(R.layout.fragment_item_setting, container, false);
         final EditText editText = (EditText) view.findViewById(R.id.input_server);
 
 
@@ -75,7 +74,7 @@ public class ItemThreeFragment extends Fragment {
                 Toasty.success(context, "Success! Your IP Server is " + ip_server, Toast.LENGTH_SHORT, true).show();
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ItemOneFragment.newInstance());
+                transaction.replace(R.id.frame_layout, ItemFragmentHome.newInstance());
                 transaction.commit();
             }
         });
