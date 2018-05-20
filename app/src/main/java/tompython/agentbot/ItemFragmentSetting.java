@@ -24,7 +24,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +71,9 @@ public class ItemFragmentSetting extends Fragment {
 
         View view = (View) inflater.inflate(R.layout.fragment_item_setting, container, false);
         final EditText editText = (EditText) view.findViewById(R.id.input_server);
-
+        final SQLiteHandler sqLiteHandler = new SQLiteHandler(this.context);
+        if (sqLiteHandler.getIPCount() > 0)
+            editText.setHint(sqLiteHandler.getIP(1).getIp_addr());
 
         Button button = (Button) view.findViewById(R.id.setting_button_done);
         button.setOnClickListener(new View.OnClickListener() {
@@ -81,12 +82,18 @@ public class ItemFragmentSetting extends Fragment {
                 Log.e("Debug View on Fragment", "What Heppenennnn");
 //                Log.e("Debug View on Fragment", v.getTransitionName());
                 ip_server = editText.getText().toString();
+                if (ip_server.equalsIgnoreCase("")) return;
+                if (sqLiteHandler.getIPCount() == 0)
+                    sqLiteHandler.addIP(new FoundIP(1,ip_server));
+                else
+                    sqLiteHandler.updateIP(new FoundIP(1, ip_server));
+
                 mongo = new MongoClient(ip_server, 27017);
                 database = mongo.getDatabase("DNSParser");
                 collection = database.getCollection("Collection_FoundIP");
                 Log.e("DEBUG",ip_server);
                 Log.e("DEBUG",String.valueOf(collection.find()));
-                Toasty.success(context, "Success! Your IP Server is " + ip_server, Toast.LENGTH_SHORT, true).show();
+                Toasty.success(context, "Success! Your IP Server is " + sqLiteHandler.getIP(1).getIp_addr(), Toast.LENGTH_SHORT, true).show();
 
                 //FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 //transaction.replace(R.id.frame_layout, ItemFragmentHome.newInstance());
