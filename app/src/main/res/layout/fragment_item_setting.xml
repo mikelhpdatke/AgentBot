@@ -14,7 +14,7 @@
         android:layout_marginTop="100dp"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="Your RESTFul API Server"
+        android:hint="Mongodb Server"
         android:textColor="@android:color/background_dark"
         android:textColorHighlight="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"

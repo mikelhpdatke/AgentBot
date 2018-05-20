@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -87,7 +88,12 @@ public class ItemFragmentDashboard extends Fragment {
         adapter = new Adapter(getActivity());
         ////////////////
         //
-
+        if (bt == null){
+            Log.e("Debug_Tom", "Button Star ======== null??");
+        }
+        if (view == null){
+            Log.e("Debug_Tom", "view ======== null??");
+        }
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,6 +194,13 @@ public class ItemFragmentDashboard extends Fragment {
 
 
         //
+        if (view == null ){
+            return;
+        }
+        if ( ItemFragmentSetting.ip_server == null){
+            Toast.makeText(context, "Please set IP Mongodb Server first in \"Setting\" tab!!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Button bt = (Button)view.findViewById(R.id.button_start);
         bt.setEnabled(false);
         if((int)bt.getTag() == 1){
@@ -253,7 +266,7 @@ public class ItemFragmentDashboard extends Fragment {
         String rootDataPath = context.getApplicationInfo().dataDir + "/files";
         String filePath = rootDataPath + "/busybox.bin";
         File file = new File(filePath);
-        AssetManager assetManager = getActivity().getAssets();
+        AssetManager assetManager = activity.getAssets();
 
         try{
             if (file.exists()) {

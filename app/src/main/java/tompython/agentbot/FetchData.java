@@ -11,9 +11,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.mongodb.Block;
-import com.mongodb.client.MongoClient;
+import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
 import org.bson.Document;
 import org.json.JSONArray;
@@ -32,6 +33,7 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
+import static java.lang.StrictMath.max;
 
 /**
  * Created by luong on 3/18/2018.
@@ -43,7 +45,7 @@ public class FetchData extends AsyncTask<String, String, String> {
     Adapter adapter;
     RecyclerView recyclerView;
     String ip_server;
-
+    List<String> list = null;
     public FetchData(Activity contextParent, Adapter adapter, RecyclerView recyclerView, String ip_server) {
         this.contextParent = contextParent;
         this.adapter = adapter;
@@ -56,6 +58,7 @@ public class FetchData extends AsyncTask<String, String, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         Log.e("Debug_Tom", Calendar.getInstance().getTime().toString() + ":" +"Running FetchData classs..");
+
     }
 
     protected String doInBackground(String... strings) {
@@ -67,12 +70,17 @@ public class FetchData extends AsyncTask<String, String, String> {
                 return null;
             }
             Log.e("Background::","Fetching data from server..");
+            Log.e("Debug_Tom", String.valueOf(ItemFragmentSetting.collection.count()) + "WTF");
             //LogActivity.addString(Calendar.getInstance().getTime().toString() + ":" +"Fetching data from server..");
             try {
-
-                //publishProgress(stringBuffer.toString());
-                for (Document cur : ItemFragmentSetting.collection.find()) {
-                    Log.e("DEBUG",cur.toJson());
+                if (ItemFragmentSetting.collection.count() != ItemFragmentSetting.foundIP) {
+                    list = new ArrayList<>();
+                    for (Document document : ItemFragmentSetting.collection.find(
+                            Filters.gt("id", max(0, ItemFragmentSetting.collection.count() - 10)))) {
+                                list.add(document.getString("ip"));
+                    }
+                    ItemFragmentSetting.foundIP = list.size();
+                    publishProgress();
                 }
                 Thread.sleep(5000);
             } catch (Exception e) {
@@ -87,24 +95,6 @@ public class FetchData extends AsyncTask<String, String, String> {
     protected void onProgressUpdate(String... values) {
         Log.e("Dang xu ly giao dien..", "Giao dien fetch data");
         super.onProgressUpdate(values);
-        List<String> list = new ArrayList<>();
-        String s = values[0];
-        Log.e("Json Result", s);
-        try {
-            JSONObject jsonObject = new JSONObject(s);
-            JSONArray jsonArray = jsonObject.getJSONObject("hits").getJSONArray("hits");
-            Log.e("ArrLen", Integer.toString(jsonArray.length()));
-            for(int i = 0; i < jsonArray.length(); i++) {
-                Log.e("ii:", Integer.toString(i));
-                Log.e("JSon Resultmm", jsonArray.getJSONObject(i).getJSONObject("_source").getString("ip"));
-                list.add(jsonArray.getJSONObject(i).getJSONObject("_source").getString("ip").toString());
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        // Set list && Adapter
-        Log.e("AdapterLogErr", Integer.toString(list.size()) );
-
         ItemFragmentDashboard.list = list;
         adapter.setList(list);
         for (String i : adapter.list) {
@@ -113,8 +103,8 @@ public class FetchData extends AsyncTask<String, String, String> {
         adapter.notifyDataSetChanged();
 
         // Push notification..
-        if (LASTCOUNT < list.size()) {
-            if (s.length() > 0) {
+
+            //if (s.length() > 0) {
                 Intent intent = new Intent(contextParent, MainActivity.class);
                 intent.setAction(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -125,7 +115,7 @@ public class FetchData extends AsyncTask<String, String, String> {
                 Notification noti = null;
 
                     noti = new Notification.Builder(contextParent)
-                            .setContentTitle("Router 1 đang bị tấn công!!")
+                            .setContentTitle("Thiết bị truy cập địa chỉ lạ!!")
                             .setContentText("Bấm để xem chi tiết")
                             .setSmallIcon(R.drawable.ic_action_bug)
                             .setContentIntent(pIntent)
@@ -138,9 +128,9 @@ public class FetchData extends AsyncTask<String, String, String> {
                 // hide the notification after its selected
                 noti.flags |= Notification.FLAG_AUTO_CANCEL;
                 notificationManager.notify(0, noti);
-                LASTCOUNT = list.size();
-            }
-        }
+                //LASTCOUNT = list.size();
+
+
     }
 
     @Override

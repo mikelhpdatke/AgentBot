@@ -75,6 +75,7 @@ public class Agent {
                 return;
             }
             // Command :: tcpdump -i <interface> "tcp[tcpflags] & (tcp-syn) != 0"
+            Log.e("Debug_Tom", ip_server);
             rootTcpdumpShell.addCommand(activity.getApplicationInfo().dataDir
                     + "/files/tcpdump.bin -i any \"tcp[tcpflags] & (tcp-syn) != 0\" -w - | "
                     + activity.getApplicationInfo().dataDir

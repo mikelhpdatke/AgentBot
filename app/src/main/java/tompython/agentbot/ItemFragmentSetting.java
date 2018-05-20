@@ -45,9 +45,10 @@ public class ItemFragmentSetting extends Fragment {
     static String ip_server = null;
     Context context;
     Activity activity;
-    static MongoClient mongo = new MongoClient(ItemFragmentSetting.ip_server, 27017);
-    static MongoDatabase database = mongo.getDatabase("BlackIP");
-    static MongoCollection<Document> collection = database.getCollection("Collection_1");
+    static int foundIP = 0;
+    static MongoClient mongo ;
+    static MongoDatabase database ;
+    static MongoCollection<Document> collection ;
     public static ItemFragmentSetting newInstance() {
         ItemFragmentSetting fragment = new ItemFragmentSetting();
         return fragment;
@@ -80,9 +81,11 @@ public class ItemFragmentSetting extends Fragment {
                 Log.e("Debug View on Fragment", "What Heppenennnn");
 //                Log.e("Debug View on Fragment", v.getTransitionName());
                 ip_server = editText.getText().toString();
-                mongo = new MongoClient(ItemFragmentSetting.ip_server, 27017);
+                mongo = new MongoClient(ip_server, 27017);
                 database = mongo.getDatabase("BlackIP");
                 collection = database.getCollection("FoundIP");
+                Log.e("DEBUG",ip_server);
+                Log.e("DEBUG",String.valueOf(collection.find()));
                 Toasty.success(context, "Success! Your IP Server is " + ip_server, Toast.LENGTH_SHORT, true).show();
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
