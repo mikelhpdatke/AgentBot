@@ -4,6 +4,21 @@
                 android:layout_height="match_parent"
                 >
 
+    <Button
+        android:id="@+id/button_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_status"
+        android:layout_marginTop="-100dp"
+        android:background="@color/blue_50"
+        android:text="Quit"
+        android:textColor="@color/blue_A700"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="54dp"
+        tools:layout_editor_absoluteY="356dp" />
+
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="match_parent"
@@ -35,19 +50,18 @@
         android:layout_alignParentLeft="true" />
 
     <Button
-        android:id="@+id/button_stop"
+        android:id="@+id/button_cleardb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_below="@+id/tv_status"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="-100dp"
-        android:text="Quit"
-        android:textColor="@color/blue_A700"
         android:background="@color/blue_50"
+        android:text="DROP DB"
+        android:textColor="@color/blue_A700"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="54dp"
-        tools:layout_editor_absoluteY="356dp"
-        android:layout_alignParentRight="true" />
+        tools:layout_editor_absoluteY="356dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rycycleView"

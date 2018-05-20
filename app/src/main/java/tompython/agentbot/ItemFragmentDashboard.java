@@ -81,6 +81,7 @@ public class ItemFragmentDashboard extends Fragment {
 
         final Button bt = (Button) view.findViewById(R.id.button_start);
         final Button bt_stop = (Button) view.findViewById(R.id.button_stop);
+        final Button bt_clear = (Button) view.findViewById(R.id.button_cleardb);
         Log.e("Debug_Tom","Initialising");
         Log.e("Debug_Tom","Requesting root permissions..");
         mInflater = inflater;
@@ -97,7 +98,28 @@ public class ItemFragmentDashboard extends Fragment {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (view == null) return;
                 startCapture(view);
+            }
+        });
+
+        bt_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ItemFragmentSetting.collection.drop();
+                        adapter.setList(new ArrayList<String>());
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                });
+                thread.start();
             }
         });
 
@@ -202,6 +224,10 @@ public class ItemFragmentDashboard extends Fragment {
             return;
         }
         Button bt = (Button)view.findViewById(R.id.button_start);
+        if (bt == null){
+            Log.e("Debug_Tom", "WTF button start == null");
+            return ;
+        }
         bt.setEnabled(false);
         if((int)bt.getTag() == 1){
             //Using progress dialogue from main. See comment in: Agent.stopTcpdumpCapture

@@ -104,7 +104,7 @@ public class FetchData extends AsyncTask<String, String, String> {
 
         // Push notification..
 
-            //if (s.length() > 0) {
+            if (list.size() > 0) {
                 Intent intent = new Intent(contextParent, MainActivity.class);
                 intent.setAction(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -114,12 +114,12 @@ public class FetchData extends AsyncTask<String, String, String> {
                 // Actions are just fake
                 Notification noti = null;
 
-                    noti = new Notification.Builder(contextParent)
-                            .setContentTitle("Thiết bị truy cập địa chỉ lạ!!")
-                            .setContentText("Bấm để xem chi tiết")
-                            .setSmallIcon(R.drawable.ic_action_bug)
-                            .setContentIntent(pIntent)
-                            .build();
+                noti = new Notification.Builder(contextParent)
+                        .setContentTitle("Thiết bị truy cập địa chỉ lạ!!")
+                        .setContentText("Bấm để xem chi tiết")
+                        .setSmallIcon(R.drawable.ic_action_bug)
+                        .setContentIntent(pIntent)
+                        .build();
 
 
                 noti.defaults |= Notification.DEFAULT_SOUND;
@@ -129,7 +129,7 @@ public class FetchData extends AsyncTask<String, String, String> {
                 noti.flags |= Notification.FLAG_AUTO_CANCEL;
                 notificationManager.notify(0, noti);
                 //LASTCOUNT = list.size();
-
+            }
 
     }
 

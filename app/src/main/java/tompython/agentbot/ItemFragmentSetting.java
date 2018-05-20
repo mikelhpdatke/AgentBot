@@ -82,15 +82,15 @@ public class ItemFragmentSetting extends Fragment {
 //                Log.e("Debug View on Fragment", v.getTransitionName());
                 ip_server = editText.getText().toString();
                 mongo = new MongoClient(ip_server, 27017);
-                database = mongo.getDatabase("BlackIP");
-                collection = database.getCollection("FoundIP");
+                database = mongo.getDatabase("DNSParser");
+                collection = database.getCollection("Collection_FoundIP");
                 Log.e("DEBUG",ip_server);
                 Log.e("DEBUG",String.valueOf(collection.find()));
                 Toasty.success(context, "Success! Your IP Server is " + ip_server, Toast.LENGTH_SHORT, true).show();
 
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_layout, ItemFragmentHome.newInstance());
-                transaction.commit();
+                //FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                //transaction.replace(R.id.frame_layout, ItemFragmentHome.newInstance());
+                //transaction.commit();
             }
         });
 
